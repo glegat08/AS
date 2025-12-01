@@ -1,30 +1,37 @@
 cmake_minimum_required(VERSION 3.14)
-project(MyOgreProject)
+project(MyOgreNextProject)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Télécharge et compile Ogre
-include(FetchContent)
+# Afficher les chemins de recherche pour debug
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message(STATUS "OGRE_DIR: ${OGRE_DIR}")
 
-FetchContent_Declare(
-    OGRE
-    GIT_REPOSITORY https://github.com/OGRECave/ogre.git
-    GIT_TAG v14.2.5
-    GIT_SHALLOW TRUE
-)
+# Trouver OgreNext (le nom du package peut être OGRE ou OGRE-Next)
+find_package(OGRE QUIET CONFIG)
 
-# Options Ogre
-set(OGRE_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
-set(OGRE_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
-set(OGRE_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(OGRE_BUILD_RENDERSYSTEM_D3D9 OFF CACHE BOOL "" FORCE)
-set(OGRE_BUILD_RENDERSYSTEM_D3D11 ON CACHE BOOL "" FORCE)
-set(OGRE_BUILD_RENDERSYSTEM_GL ON CACHE BOOL "" FORCE)
-set(OGRE_BUILD_COMPONENT_OVERLAY ON CACHE BOOL "" FORCE)
+if(NOT OGRE_FOUND)
+    message(STATUS "Package OGRE non trouvé, recherche de OGRE-Next...")
+    find_package(OGRE-Next CONFIG)
+endif()
 
-message(STATUS "Téléchargement et configuration d'Ogre...")
-FetchContent_MakeAvailable(OGRE)
+if(NOT OGRE_FOUND)
+    message(FATAL_ERROR 
+        "OgreNext non trouvé!\n"
+        "Vérifie que:\n"
+        "1. OgreNext a été compilé (external/ogre-next/build/)\n"
+        "2. CMAKE_PREFIX_PATH ou OGRE_DIR pointe vers le bon dossier\n"
+        "3. Le fichier OGREConfig.cmake existe\n"
+        "\n"
+        "Chemins actuels:\n"
+        "  CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}\n"
+        "  OGRE_DIR = ${OGRE_DIR}\n"
+    )
+endif()
+
+message(STATUS "OgreNext trouvé: ${OGRE_CONFIG}")
+message(STATUS "Composants OGRE disponibles: ${OGRE_COMPONENTS}")
 
 # Ajoute les sous-projets
 add_subdirectory(lib)
