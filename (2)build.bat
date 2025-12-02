@@ -2,12 +2,12 @@
 setlocal EnableDelayedExpansion
 
 echo ========================================
-echo  OgreNext Build System - Debug Mode
+echo    OgreNext Build System - Debug Mode
 echo ========================================
 echo.
 
 REM ========================================
-REM  Python Detection
+REM            Python Detection
 REM ========================================
 set "PYTHON_CMD="
 
@@ -77,13 +77,13 @@ echo [OK] Python detected: %PYTHON_CMD%
 echo.
 
 REM ========================================
-REM  Directory Setup
+REM             Directory Setup
 REM ========================================
 if not exist "external" mkdir external
 if not exist "build" mkdir build
 
 REM ========================================
-REM  OgreNext Dependencies
+REM          OgreNext Dependencies
 REM ========================================
 cd external
 
@@ -129,7 +129,7 @@ cmake --build . --target install --config Debug
 cd ..\..
 
 REM ========================================
-REM  OgreNext
+REM              OgreNext
 REM ========================================
 if not exist "ogre-next" (
     echo.
@@ -246,11 +246,11 @@ if "%OGRE_CONFIG_PATH%"=="" (
 cd ..\..\..\
 
 REM ========================================
-REM  User Project
+REM             User Project
 REM ========================================
 echo.
 echo ========================================
-echo [6/6] Building User Project
+echo     [6/6] Building User Project
 echo ========================================
 echo.
 
@@ -280,11 +280,11 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 REM ========================================
-REM  Copy DLLs
+REM              Copy DLLs
 REM ========================================
 echo.
 echo ========================================
-echo Copying OgreNext DLLs
+echo        Copying OgreNext DLLs
 echo ========================================
 echo.
 
@@ -328,7 +328,7 @@ cd ..
 
 echo.
 echo ========================================
-echo  BUILD COMPLETE!
+echo            BUILD COMPLETE!
 echo ========================================
 echo.
 echo Executable: build\main\Debug\MyGame.exe
@@ -338,6 +338,6 @@ echo   cd build\main\Debug
 echo   MyGame.exe
 echo.
 echo Or simply:
-echo   build\main\Debug\MyGame.exe
+echo   run.bat
 echo.
 pause

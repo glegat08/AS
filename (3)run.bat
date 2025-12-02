@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo  Running MyGame (Debug)
+echo         Running MyGame (Debug)
 echo ========================================
 echo.
 
