@@ -13,7 +13,18 @@ if not exist "build" (
 
 cd build
 
-echo [1/2] Rebuilding Debug version...
+echo [1/3] Reconfiguring CMake to detect new files...
+cmake ..
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo [ERROR] CMake reconfiguration failed
+    cd ..
+    pause
+    exit /b 1
+)
+
+echo.
+echo [2/3] Rebuilding Debug version...
 cmake --build . --config Debug --parallel 4
 
 if %ERRORLEVEL% NEQ 0 (
@@ -28,7 +39,7 @@ echo.
 echo [OK] Debug build successful
 echo.
 
-echo [2/2] Checking for Release build...
+echo [3/3] Checking for Release build...
 if exist "main\Release" (
     echo Release directory exists, rebuilding Release too...
     cmake --build . --config Release --parallel 4
